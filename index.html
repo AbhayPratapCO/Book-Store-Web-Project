@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ms Kathi Book Store | Khan Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="antialiased" style="background: var(--paper);">
+
+  <!-- WISHLIST OVERLAY & PANEL -->
+  <div id="wishlist-overlay" class="hidden"></div>
+  <aside id="wishlist-panel" class="translate-x-full" aria-label="Wishlist">
+    <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: var(--border);">
+      <h3 class="font-serif text-lg" style="color: var(--text);">❤ Wishlist</h3>
+      <button id="wishlist-close" class="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div id="wishlist-items" class="flex-1 overflow-y-auto px-5 py-2"></div>
+    <div class="px-5 py-4 border-t text-xs text-center" style="border-color: var(--border); color: var(--muted);">
+      Saved to your browser · Enquire about any title above
+    </div>
+  </aside>
+
+  <!-- HEADER / NAV -->
+  <header class="w-full sticky top-0 z-50 backdrop-blur shadow" style="background: var(--nav-bg);">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center space-x-2 shrink-0">
+        <span class="brand-dot bg-amber-600"></span>
+        <div class="text-xl font-semibold" style="font-family: 'Playfair Display', serif; color: var(--text);">
+          Ms Kathi Book Store
+        </div>
+      </div>
+
+      <ul class="hidden lg:flex items-center gap-5 text-xs uppercase tracking-wide" id="main-nav">
+        <li><a href="#hero" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#collection" class="nav-link">Collection</a></li>
+        <li><a href="#ambience" class="nav-link">Ambience</a></li>
+        <li><a href="#why_visit" class="nav-link">Why Visit</a></li>
+        <li><a href="#enquiry" class="nav-link">Enquiry</a></li>
+        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Dark mode toggle -->
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+          <!-- icon injected by JS -->
+        </button>
+        <!-- Wishlist toggle -->
+        <button id="wishlist-toggle" aria-label="Open wishlist">
+          <span id="wishlist-badge" class="hidden">0</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero" class="relative overflow-hidden h-[78vh] md:h-[88vh] bg-cover bg-center"
+      style="background-image: url('https://i.insider.com/63b78a0164499e001852d99e?width=1200&format=jpeg');">
+      <div class="absolute inset-0 bg-black/45"></div>
+      <div class="relative z-10 flex items-center justify-center h-full px-6">
+        <div class="text-center max-w-3xl text-white">
+          <p class="text-xs uppercase tracking-[0.3em] opacity-80 mb-4" style="color:#f6f0db;">Khan Market · New Delhi · Ships Worldwide</p>
+          <h1 class="text-4xl md:text-6xl font-serif font-bold drop-shadow-lg" style="color: #f8f0e0; font-family: 'Playfair Display', serif;">
+            Step Into a World of Literary Magic
+          </h1>
+          <p class="mt-4 text-lg md:text-xl opacity-90" style="color: #f6f0db;">
+            A Timeless Bookstore Experience in the Heart of Khan Market
+          </p>
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="#enquiry" class="btn-primary">Enquire About a Book</a>
+            <a href="#collection" class="btn-secondary">Explore Our Collection</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20" style="background: var(--paper);">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <h2 class="text-3xl md:text-4xl font-serif mb-6" style="color: var(--text); font-family: 'Playfair Display', serif;">A Home for Readers, a Maze of Stories</h2>
+        <div id="about-content" class="prose" data-reveal="true"></div>
+      </div>
+    </section>
+
+    <!-- RECENTLY VIEWED (hidden when empty) -->
+    <section id="recently-viewed-section" class="hidden py-10" style="background: var(--section-alt);">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <h3 class="text-xl font-serif mb-4" style="color: var(--text); font-family: 'Playfair Display', serif;">Recently Viewed</h3>
+        <div id="recently-viewed-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- BOOK COLLECTION -->
+    <section id="collection" class="py-20" style="background: var(--card-bg);">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <div class="mb-8">
+          <h2 class="text-3xl md:text-4xl font-serif mb-3" style="color: var(--text); font-family: 'Playfair Display', serif;">Book Collection</h2>
+
+          <!-- Search + Filter row -->
+          <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center mt-5">
+            <div class="relative w-full sm:w-auto">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input id="search-input" type="search" placeholder="Search by title or author…" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="filter-btn filter-active" data-cat="all">All</button>
+              <button class="filter-btn" data-cat="fiction">Fiction</button>
+              <button class="filter-btn" data-cat="classic">Classics</button>
+              <button class="filter-btn" data-cat="nonfiction">Non-Fiction</button>
+              <button class="filter-btn" data-cat="rare">Rare Books</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="collection-grid" class="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"></div>
+      </div>
+    </section>
+
+    <!-- AMBIENCE / GALLERY -->
+    <section id="ambience" class="py-20 bg-section-alt">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <h2 class="text-3xl md:text-4xl font-serif mb-6" style="color: var(--text); font-family: 'Playfair Display', serif;">Ambience Gallery</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+           <img src="https://media.gettyimages.com/id/2199890170/photo/srinagar-jammu-and-kashmir-india-a-kashmiri-man-reads-a-book-at-a-bookstore-in-srinagar.jpg?s=612x612&w=0&k=20&c=-BSRu_EtEp_KGXcR6OMuhWgkytLV7_-A3xy6AA-QBqM=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/2228172860/photo/a-shopkeeper-waits-for-customers-at-a-bookshop-in-srinagar-on-august-7-2025-indian.jpg?s=612x612&w=0&k=20&c=eyRxSXxrw1wPFvz8tEs50zXirkKthnRW2f3BoIqRfzI=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/1197265944/photo/various-books-together-abstract-background-of-books.jpg?s=612x612&w=0&k=20&c=8mSshQALoZfmKDukDe9GE2pTj41Uacjk1Qd_NdkpjRQ=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/95797381/photo/gurgaon-india-books-are-displayed-at-the-quill-and-canvas-book-store-in-gurgaon-on-january-12.jpg?s=612x612&w=0&k=20&c=4wBgitJpG2KiaaGBlikKviojI1HUdPb3sJ7dGUeISU4=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/2228190515/photo/a-man-browses-books-at-a-bookshop-in-srinagar-jammu-and-kashmir-on-august-7-2025-india-bans.jpg?s=612x612&w=0&k=20&c=Ft6pleYJjgON6ssjEIXz9NcKB4-riE11myh4ZWcnMYQ=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/523557910/photo/a-book-store-india.jpg?s=612x612&w=0&k=20&c=fHuYvgUkJBrrotGd6c6gKoZA4RweD7K-3FnLicpOr8M=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/2229113519/photo/a-bookstore-is-photographed-in-srinagar-kashmir-india-on-august-12-2025-the-government-of.jpg?s=612x612&w=0&k=20&c=nUcPhyObALdnHyM2wL2o4m22ohYqTT9zCotKbGgbtE4=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+          <img src="https://media.gettyimages.com/id/968720790/photo/in-this-picture-taken-on-may-30-a-copy-of-the-book-the-spy-chronicles-raw-isi-and-the-illusion.jpg?s=612x612&w=0&k=20&c=PfEnteQchkVDXn5gCxOfvbw5KB71nvlcDD4vcvCjtX8=" alt="" class="rounded shadow-md object-cover h-40 w-full">
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY VISIT -->
+    <section id="why_visit" class="py-20" style="background: var(--card-bg);">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <h2 class="text-3xl md:text-4xl font-serif mb-6" style="color: var(--text); font-family: 'Playfair Display', serif;">Why Visit Ms Kathi</h2>
+        <ul class="list-disc pl-6 space-y-2" style="color: var(--text);" data-reveal="true">
+          <li>22+ curated titles across fiction, classics, non-fiction and rare editions</li>
+          <li>Worldwide shipping — every book can be delivered anywhere in the world</li>
+          <li>Welcoming environment with warm lighting and cozy aisles</li>
+          <li>Social media worthy interiors for timeless photography</li>
+          <li>A hidden literary gem in Khan Market with character and history</li>
+          <li>Easy online enquiry — tell us the book, we'll find it</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ENQUIRY -->
+    <section id="enquiry" class="py-20" style="background: var(--paper);">
+      <div class="max-w-4xl mx-auto px-6 md:px-4">
+        <h2 class="text-3xl md:text-4xl font-serif mb-2" style="color: var(--text); font-family: 'Playfair Display', serif;">Book Enquiry</h2>
+        <p class="text-sm mb-6" style="color: var(--muted);">Looking for a specific title? Fill in the details and we'll get back to you within 24 hours.</p>
+
+        <form id="enquiry-form" class="grid grid-cols-1 md:grid-cols-2 gap-4" autocomplete="off">
+          <input id="form-name" name="name" placeholder="Your Name" class="input" required />
+          <input name="phone" placeholder="Phone Number" class="input" required />
+          <input name="email" placeholder="Email Address" class="input" type="email" required />
+          <input id="form-book-name" name="book_name" placeholder="Book Name" class="input" required />
+          <input id="form-author-name" name="author_name" placeholder="Author Name (optional)" class="input" />
+          <textarea name="message" placeholder="Any additional message…" class="input h-28" style="resize:vertical;"></textarea>
+          <div class="md:col-span-2 flex justify-end">
+            <button type="submit" class="btn-primary w-full md:w-auto px-8">Send Enquiry</button>
+          </div>
+        </form>
+
+        <div id="toast" class="mt-4 hidden" role="status"></div>
+
+        <!-- ENQUIRY HISTORY -->
+        <div id="enquiry-history-section" class="hidden mt-10">
+          <h3 class="text-lg font-serif mb-3 flex items-center gap-2" style="color: var(--text); font-family: 'Playfair Display', serif;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Your Enquiry History
+          </h3>
+          <p class="text-xs mb-3" style="color: var(--muted);">Stored locally in your browser.</p>
+          <div id="enquiry-history-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="py-20 bg-section-alt">
+      <div class="max-w-6xl mx-auto px-6 md:px-4">
+        <h2 class="text-3xl md:text-4xl font-serif mb-6" style="color: var(--text); font-family: 'Playfair Display', serif;">What Readers Say</h2>
+        <div class="relative overflow-hidden rounded-md shadow-lg p-4" style="background: var(--card-bg); min-height: 160px;">
+          <div id="testimonials-container" class="flex" style="gap:1rem;"></div>
+          <div class="absolute inset-y-0 left-0 my-auto w-full flex justify-between px-2 pointer-events-none">
+            <button id="prev" aria-label="Previous" class="pointer-events-auto p-2 rounded-full shadow transition-colors" style="background: var(--card-bg);">‹</button>
+            <button id="next" aria-label="Next" class="pointer-events-auto p-2 rounded-full shadow transition-colors" style="background: var(--card-bg);">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20" style="background: var(--card-bg);">
+      <div class="max-w-6xl mx-auto px-6 md:px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-serif mb-4" style="color: var(--text); font-family: 'Playfair Display', serif;">Visit Us</h2>
+          <p class="mb-2" style="color: var(--text);">Khan Market, New Delhi </p>
+          <p style="color: var(--text);">📞 +91 847591605</p>
+          <p class="mb-4" style="color: var(--text);">✉ hello@mskathibookstore.in</p>
+          <p class="text-sm mb-5" style="color: var(--muted);">🌍 We ship worldwide. Enquire online for delivery options.</p>
+          <div>
+            <iframe
+              src="https://www.google.com/maps?q=Khan+Market+New+Delhi&output=embed"
+              width="100%" height="280" style="border:0; border-radius: 0.5rem;" allowfullscreen="" loading="lazy">
+            </iframe>
+          </div>
+        </div>
+        <div class="self-center">
+                  </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-6 text-center text-sm" style="color: var(--muted); background: var(--section-alt);">
+    © <span id="year"></span> Ms Kathi Book Store, Khan Market, New Delhi · Ships Worldwide
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
